@@ -1,0 +1,44 @@
+# Ignore Python cache files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore virtual environments
+venv/
+env/
+*.venv
+
+# Ignore environment variables & secrets
+.env
+*.key
+*.pem
+
+# Ignore large data files (optional)
+*.csv
+*.tsv
+# *.h5  # Uncomment if using TensorFlow (model checkpoints)
+# *.hdf5  # Uncomment if using TensorFlow (model format)
+# *.pt  # Uncomment if using PyTorch (model checkpoints)
+*.pkl  # Serialized ML models
+*.joblib  # Scikit-learn joblib models
+*.sqlite
+*.db
+
+# Ignore logs and temp files
+logs/
+*.log
+*.out
+*.tmp
+
+# Ignore OS-specific files
+.DS_Store
+Thumbs.db
+
+# Ignore IDE-specific files
+.vscode/
+.idea/
+*.iml
