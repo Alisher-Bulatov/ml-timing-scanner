@@ -1,6 +1,7 @@
 import time
 import random
 import string
+import csv
 
 # Generate test data
 def random_string(length=16):
@@ -8,33 +9,38 @@ def random_string(length=16):
 
 secret = random_string()
 
-# Insecure function (early exit on first mismatch)
 def insecure_compare(user_input):
     for i in range(len(user_input)):
         if user_input[i] != secret[i]:
             return False
     return True
 
-# Constant-time function (compares all characters)
 def constant_time_compare(user_input):
     result = 0
     for i in range(len(user_input)):
-        result |= ord(user_input[i]) ^ ord(secret[i])  # XOR comparison
+        result |= ord(user_input[i]) ^ ord(secret[i])
     return result == 0
 
-# Measure execution time
 def measure_time(func, user_input):
-    start = time.perf_counter_ns()  # High-precision timer
+    start = time.perf_counter_ns()
     func(user_input)
     end = time.perf_counter_ns()
     return end - start
 
-# Test runs
+# Collect timing data
 test_inputs = [random_string() for _ in range(100)]
+data = []
 
-insecure_times = [measure_time(insecure_compare, inp) for inp in test_inputs]
-constant_times = [measure_time(constant_time_compare, inp) for inp in test_inputs]
+for inp in test_inputs:
+    insecure_time = measure_time(insecure_compare, inp)
+    constant_time = measure_time(constant_time_compare, inp)
+    data.append([inp, "insecure", insecure_time])
+    data.append([inp, "constant", constant_time])
 
-# Output results
-print(f"Avg Insecure Time: {sum(insecure_times) / len(insecure_times)} ns")
-print(f"Avg Constant-Time: {sum(constant_times) / len(constant_times)} ns")
+# Save to CSV
+with open("timing_data.csv", "w", newline="") as f:
+    writer = csv.writer(f)
+    writer.writerow(["input", "type", "time_ns"])
+    writer.writerows(data)
+
+print("Timing data saved to timing_data.csv")
