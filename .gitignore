@@ -18,7 +18,7 @@ env/
 *.pem
 
 # Ignore large data files (optional)
-*.csv
+#*.csv
 *.tsv
 # *.h5  # Uncomment if using TensorFlow (model checkpoints)
 # *.hdf5  # Uncomment if using TensorFlow (model format)
